@@ -1,0 +1,21 @@
+services:
+  ami-ssh:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ami-ssh
+    ports:
+      - "${PORT}:${PORT}"
+    env_file:
+      - .env.local
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=file:/app/data/local.db
+    volumes:
+      - ./logs:/app/logs
+      - ./data:/app/data
+    restart: unless-stopped
+
+networks:
+  default:
+    name: ami-ssh-network
