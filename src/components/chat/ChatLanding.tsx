@@ -52,10 +52,10 @@ const ChatLanding: React.FC<ChatLandingProps> = ({ sessionId: propSessionId }) =
 					<div className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
 					Local AI Reasoning Active
 				</div>
-				<h1 className="text-4xl md:text-7xl font-bold text-zinc-100 tracking-tight">
-					Meet <span className="text-blue-500">Ami</span>.
+				<h1 className="text-4xl md:text-7xl font-bold font-serif text-zinc-100 tracking-tight">
+					Meet <span className="text-blue-500">Shmart</span>.
 				</h1>
-				<p className="text-base md:text-xl text-zinc-400 max-w-2xl mx-auto leading-relaxed px-2">
+				<p className="text-base md:text-lg text-zinc-400 max-w-2xl mx-auto leading-relaxed px-2">
 					Your autonomous SSH assistant. Execute system tasks, debug servers, and manage
 					infrastructure through natural language.
 				</p>

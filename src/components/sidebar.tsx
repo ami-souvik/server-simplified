@@ -149,7 +149,7 @@ export const Sidebar = () => {
 				>
 					{!isSidebarCollapsed && (
 						<h1 className="text-xl font-medium tracking-tight text-white font-serif">
-							Ami SSH
+							Shmart
 						</h1>
 					)}
 					<button

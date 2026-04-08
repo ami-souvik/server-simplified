@@ -50,7 +50,7 @@ export const ChatInput = ({
 			</div>
 			<div className="absolute bottom-3 right-3 flex items-center gap-3">
 				<button className="flex items-center gap-1.5 px-2.5 py-1 bg-black/20 hover:bg-black/40 rounded-lg text-xs font-medium text-zinc-400 transition-all border border-white/5">
-					Ami v1.5 <ChevronDown size={14} />
+					Shmart v1.5 <ChevronDown size={14} />
 				</button>
 				<button className="p-1.5 text-zinc-500 hover:text-white transition-colors">
 					<Mic size={18} />

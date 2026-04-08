@@ -178,7 +178,7 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ sessionId }) => {
 							</div>
 							<div className="flex items-center gap-2 text-zinc-500 text-xs md:text-sm italic">
 								<Loader2 size={12} className="animate-spin" />
-								Ami is thinking...
+								Shmart is thinking...
 							</div>
 						</div>
 					)}
