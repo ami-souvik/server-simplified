@@ -13,9 +13,7 @@
 	},
 	"dependencies": {
 		"@ai-sdk/openai": "^3.0.51",
-		"@ai-sdk/react": "^3.0.153",
 		"@libsql/client": "^0.17.2",
-		"ai": "^6.0.151",
 		"drizzle-orm": "^0.45.2",
 		"framer-motion": "^12.38.0",
 		"lucide-react": "^1.7.0",

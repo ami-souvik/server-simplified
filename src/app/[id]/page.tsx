@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { ChatMessages } from "@/components/chat/ChatMessages";
+import ChatMessages from "@/components/chat/ChatMessages";
 
 export default function SessionPage() {
 	const params = useParams();
