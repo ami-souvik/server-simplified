@@ -1,0 +1,30 @@
+# PRE-COMMIT HOOKS
+# -----------------------------------------------------------------------------
+# AgentTree - Validation pipeline
+# Ensures code quality, formatting, and build integrity.
+# -----------------------------------------------------------------------------
+
+pre-commit:
+    parallel: true
+    commands:
+        # Format staged files using Prettier
+        prettier:
+            glob: "*.{js,ts,jsx,tsx,json,css,md}"
+            run: npx prettier --write {staged_files}
+            stage_fixed: true
+
+        # Lint staged files using ESLint
+        eslint:
+            glob: "*.{js,ts,jsx,tsx}"
+            run: npx eslint --fix {staged_files}
+            stage_fixed: true
+
+        # Quick typecheck to catch TS errors
+        typecheck:
+            run: npm run typecheck
+
+pre-push:
+    commands:
+        # Full production build validation before pushing
+        build-integrity:
+            run: npm run build
