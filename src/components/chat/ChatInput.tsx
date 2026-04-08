@@ -26,7 +26,7 @@ export const ChatInput = ({
 				ref={textareaRef}
 				value={input}
 				onChange={(e) => onInputChange(e.target.value)}
-				placeholder="Message Ami..."
+				placeholder="Message Shmart..."
 				className="w-full bg-transparent border-none focus:ring-0 text-[#ECECEC] placeholder:text-zinc-500 px-5 pt-4 pb-12 resize-none max-h-[200px] text-base font-inter"
 				onKeyDown={(e) => {
 					if (e.key === "Enter" && !e.shiftKey) {

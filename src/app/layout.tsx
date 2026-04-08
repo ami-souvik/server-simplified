@@ -18,7 +18,7 @@ const newsreaderSerif = Newsreader({
 });
 
 export const metadata: Metadata = {
-	title: "Shmrat - Terminal AI Assistant",
+	title: "Shmart - Terminal AI Assistant",
 	description: "SSH into your servers with Claude-like AI assistance",
 };
 

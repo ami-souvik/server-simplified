@@ -193,7 +193,7 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ sessionId }) => {
 						onKeyDown={(e) => {
 							if (e.key === "Enter") handleSend();
 						}}
-						placeholder="Message Ami..."
+						placeholder="Message Shmart..."
 						className="w-full bg-zinc-900/50 border border-zinc-800 text-zinc-100 text-sm md:text-base rounded-2xl py-3 md:py-4 pl-4 md:pl-6 pr-12 md:pr-14 focus:outline-none focus:ring-1 focus:ring-zinc-700 placeholder:text-zinc-600 transition-all group-focus-within:bg-zinc-900"
 					/>
 					<button

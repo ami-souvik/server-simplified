@@ -31,7 +31,7 @@ export async function POST(req: Request) {
 
 		let currentTurn = 1;
 		let finalReply = "";
-		let currentPrompt = `You are Ami, an AI SSH assistant. 
+		let currentPrompt = `You are Shmart, an AI SSH assistant. 
 1. To run a server command, use: [ACTION]: your_command
 2. To speak to the user, ALWAYS use: [REPLY]: your_message
 3. Keep it simple and direct.\nAssistant: [THOUGHT]`;

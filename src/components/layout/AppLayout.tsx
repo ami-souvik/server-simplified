@@ -27,7 +27,7 @@ const AppLayoutInner = ({ children }: { children: React.ReactNode }) => {
 					>
 						<Menu size={20} />
 					</button>
-					<h1 className="text-lg font-medium text-white font-serif">Ami</h1>
+					<h1 className="text-lg font-medium text-white font-serif">Shmart</h1>
 					<div className="w-10" /> {/* Spacer */}
 				</header>
 				<div className="flex-1 overflow-hidden">{children}</div>
