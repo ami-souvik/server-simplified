@@ -1,54 +1,54 @@
 @import "tailwindcss";
 
 :root {
-    --background: #212121;
-    --foreground: #ececec;
-    --sidebar: #171717;
-    --card: #2f2f2f;
-    --accent: #d29472;
-    --border: #313131;
+	--background: #212121;
+	--foreground: #ececec;
+	--sidebar: #171717;
+	--card: #2f2f2f;
+	--accent: #d29472;
+	--border: #313131;
 }
 
 body {
-    background: var(--background);
-    color: var(--foreground);
-    font-family:
-        "Inter",
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        sans-serif;
+	background: var(--background);
+	color: var(--foreground);
+	font-family:
+		"Inter",
+		-apple-system,
+		BlinkMacSystemFont,
+		"Segoe UI",
+		Roboto,
+		sans-serif;
 }
 
 @layer components {
-    .btn-ghost {
-        @apply p-2 rounded-lg hover:bg-white/10 transition-colors text-zinc-400 hover:text-white flex items-center gap-2 text-sm;
-    }
+	.btn-ghost {
+		@apply p-2 rounded-lg hover:bg-white/10 transition-colors text-zinc-400 hover:text-white flex items-center gap-2 text-sm;
+	}
 
-    .glass-card {
-        background: rgba(33, 33, 33, 0.8);
-        backdrop-filter: blur(16px);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    }
+	.glass-card {
+		background: rgba(33, 33, 33, 0.8);
+		backdrop-filter: blur(16px);
+		border: 1px solid rgba(255, 255, 255, 0.05);
+		box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+	}
 }
 
 .scrollbar-hide::-webkit-scrollbar {
-    display: none;
+	display: none;
 }
 
 pre {
-    background: #0d0d0d !important;
-    padding: 0.5rem 1rem;
-    border: 1px solid #212121;
+	background: #0d0d0d !important;
+	padding: 0.5rem 1rem;
+	border: 1px solid #212121;
 }
 
 code {
-    font-family: "Fira Code", "Cascadia Code", monospace;
+	font-family: "Fira Code", "Cascadia Code", monospace;
 }
 
 textarea:focus {
-    outline: none;
-    box-shadow: none;
+	outline: none;
+	box-shadow: none;
 }

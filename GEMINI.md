@@ -12,12 +12,12 @@ All code must strictly adhere to the following Prettier configuration:
 
 ```json
 {
-    "semi": true,
-    "trailingComma": "es5",
-    "singleQuote": false,
-    "printWidth": 100,
-    "tabWidth": 2,
-    "useTabs": false
+	"semi": true,
+	"trailingComma": "es5",
+	"singleQuote": false,
+	"printWidth": 100,
+	"tabWidth": 2,
+	"useTabs": false
 }
 ```
 
