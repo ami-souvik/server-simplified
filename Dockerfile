@@ -25,9 +25,13 @@ RUN adduser --system --uid 1001 nextjs
 # Create data and logs directory with correct permissions
 RUN mkdir -p /app/data /app/logs && chown nextjs:nodejs /app/data /app/logs
 
+# Copy standalone build
 COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+# Copy migration files for programmatic startup migration
+COPY --from=builder --chown=nextjs:nodejs /app/drizzle ./drizzle
 
 USER nextjs
 
@@ -36,4 +40,5 @@ EXPOSE 3000
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
+# The app now auto-migrates on startup via src/lib/db/index.ts
 CMD ["node", "server.js"]
