@@ -1,5 +1,5 @@
 import { saveMessage } from "@/lib/db/actions";
-import { SSHService } from "@/lib/ssh-service";
+import { getExecutor } from "@/lib/executor-factory";
 
 export async function POST(req: Request) {
 	try {
@@ -16,15 +16,7 @@ export async function POST(req: Request) {
 			await saveMessage(sessionId, "user", userContent);
 		}
 
-		const sshConfig = {
-			host: process.env.SSH_HOST || "localhost",
-			port: Number(process.env.SSH_PORT) || 22,
-			username: process.env.SSH_USER || "root",
-			password: process.env.SSH_PASSWORD,
-			privateKey: process.env.SSH_KEY,
-		};
-
-		const ssh = new SSHService(sshConfig);
+		const executor = getExecutor();
 
 		let currentTurn = 1;
 		let finalReply = "";
@@ -46,14 +38,14 @@ export async function POST(req: Request) {
 			console.log(`[SSH Sync] Turn ${currentTurn}...`);
 			let currentTurnOutput = "";
 
-			await ssh.executeOllamaStream(currentPrompt, (chunk) => {
+			await executor.executeOllamaStream(currentPrompt, (chunk: string) => {
 				currentTurnOutput += chunk;
 			});
 
 			const actionMatch = currentTurnOutput.match(/\[ACTION\]:?\s*(.*)/i);
 			if (actionMatch && actionMatch[1]) {
 				const actionCommand = actionMatch[1].trim();
-				const result = await ssh.executeCommand(actionCommand);
+				const result = await executor.executeCommand(actionCommand);
 				await saveMessage(sessionId, "user", actionCommand, "command");
 				await saveMessage(sessionId, "assistant", result, "result");
 

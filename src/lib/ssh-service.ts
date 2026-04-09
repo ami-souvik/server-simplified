@@ -1,4 +1,5 @@
 import { Client } from "ssh2";
+import { Executor } from "./executor-service";
 
 export interface SSHConfig {
 	host: string;
@@ -8,7 +9,7 @@ export interface SSHConfig {
 	privateKey?: string;
 }
 
-export class SSHService {
+export class SSHService implements Executor {
 	private config: SSHConfig;
 	private logger: (msg: string) => void;
 
