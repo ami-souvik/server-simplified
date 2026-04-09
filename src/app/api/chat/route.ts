@@ -1,9 +1,24 @@
 import { saveMessage } from "@/lib/db/actions";
 import { logDebug, logSystem } from "@/lib/debug-logger";
 import { getExecutor } from "@/lib/executor-factory";
+import { runMigrations } from "@/lib/db/migrate";
+
+let migrationPromise: Promise<void> | null = null;
 
 export async function POST(req: Request) {
 	try {
+		// Ensure migrations have run before handling any requests
+		if (
+			!migrationPromise &&
+			process.env.NODE_ENV === "production" &&
+			!process.env.SKIP_DB_MIGRATE
+		) {
+			migrationPromise = runMigrations();
+		}
+		if (migrationPromise) {
+			await migrationPromise;
+		}
+
 		const { messages, id: sessionId, assistEnabled } = await req.json();
 
 		if (!sessionId) {
@@ -80,8 +95,21 @@ export async function POST(req: Request) {
 			headers: { "Content-Type": "text/plain; charset=utf-8" },
 		});
 	} catch (error: unknown) {
-		const errorMessage = error instanceof Error ? error.message : String(error);
 		console.error("[Custom Agent] Error:", error);
-		return new Response(`Error: ${errorMessage}`, { status: 500 });
+
+		let errorMessage = "Unknown error";
+		if (error instanceof Error) {
+			errorMessage = error.message || error.name || "Error with no message";
+			if (error.stack) {
+				console.error("[Custom Agent] Stack:", error.stack);
+			}
+		} else {
+			errorMessage = String(error);
+		}
+
+		return new Response(`Error: ${errorMessage}`, {
+			status: 500,
+			headers: { "Content-Type": "text/plain; charset=utf-8" },
+		});
 	}
 }

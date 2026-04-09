@@ -9,7 +9,5 @@ const client = createClient({
 
 export const db = drizzle(client, { schema });
 
-// Auto-run migrations on startup
-if (process.env.NODE_ENV === "production") {
-	runMigrations();
-}
+// Migrations are managed via gated calls in server entry points or API routes
+// to avoid race conditions in multi-worker environments (like Next.js build or start)
