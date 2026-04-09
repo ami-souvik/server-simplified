@@ -307,6 +307,54 @@ export const Sidebar = () => {
 												</button>
 											</>
 										)}
+
+										<AnimatePresence>
+											{menuOpenId === session.id && (
+												<motion.div
+													initial={{ opacity: 0, scale: 0.95, y: -10 }}
+													animate={{ opacity: 1, scale: 1, y: 0 }}
+													exit={{ opacity: 0, scale: 0.95, y: -10 }}
+													className="absolute right-2 top-8 w-48 bg-[#252525] border border-[#313131] rounded-xl shadow-2xl py-1.5 z-50 overflow-hidden"
+												>
+													<button className="w-full flex items-center gap-3 px-3 py-2 text-[13px] text-zinc-300 hover:bg-white/5 transition-colors opacity-50 cursor-not-allowed">
+														<Star size={14} className="text-zinc-500" />
+														<span>Star</span>
+													</button>
+													<button
+														onClick={() => {
+															setEditingSessionId(session.id);
+															setEditTitle(session.title);
+															setMenuOpenId(null);
+														}}
+														className="w-full flex items-center gap-3 px-3 py-2 text-[13px] text-zinc-300 hover:bg-white/5 transition-colors"
+													>
+														<Pencil
+															size={14}
+															className="text-zinc-500"
+														/>
+														<span>Rename</span>
+													</button>
+													<button className="w-full flex items-center gap-3 px-3 py-2 text-[13px] text-zinc-300 hover:bg-white/5 transition-colors opacity-50 cursor-not-allowed">
+														<Layers
+															size={14}
+															className="text-zinc-500"
+														/>
+														<span>Add to project</span>
+													</button>
+													<div className="h-[1px] bg-[#313131] my-1.5 mx-3" />
+													<button
+														onClick={() => {
+															handleDelete(session.id);
+															setMenuOpenId(null);
+														}}
+														className="w-full flex items-center gap-3 px-3 py-2 text-[13px] text-red-400 hover:bg-red-500/10 transition-colors"
+													>
+														<Trash2 size={14} />
+														<span>Delete</span>
+													</button>
+												</motion.div>
+											)}
+										</AnimatePresence>
 									</div>
 								))}
 							</div>

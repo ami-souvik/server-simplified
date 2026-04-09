@@ -19,7 +19,7 @@ export async function saveMessage(
 	sessionId: string,
 	role: "user" | "assistant",
 	content: string,
-	type: "text" | "command" | "result" = "text"
+	type: "text" | "command" | "result" | "thought" = "text"
 ) {
 	// Ensure session exists (for new session IDs or default)
 	await createSession(sessionId === "default" ? "Default Session" : "New Chat", sessionId);

@@ -2,6 +2,7 @@ import { saveMessage } from "@/lib/db/actions";
 import { logDebug, logSystem } from "@/lib/debug-logger";
 import { getExecutor } from "@/lib/executor-factory";
 import { runMigrations } from "@/lib/db/migrate";
+import SYSTEM_PROMPT from "@/lib/system-prompt";
 
 let migrationPromise: Promise<void> | null = null;
 
@@ -38,10 +39,7 @@ export async function POST(req: Request) {
 
 		let currentTurn = 1;
 		let finalReply = "";
-		let currentPrompt = `You are Shmart, an AI SSH assistant. 
-1. To run a server command, use: [ACTION]: your_command
-2. To speak to the user, ALWAYS use: [REPLY]: your_message
-3. Keep it simple and direct.\nAssistant: [THOUGHT]`;
+		let currentPrompt = SYSTEM_PROMPT;
 
 		const history = ((messages as { role: string; content?: string }[]) || [])
 			.slice(-3)
@@ -71,11 +69,19 @@ export async function POST(req: Request) {
 				turn: currentTurn,
 			});
 
+			// Extract and save Thought
+			const thoughtMatch = currentTurnOutput.match(
+				/\[THOUGHT\]:?\s*([\s\S]*?)(?=\[ACTION\]|\[REPLY\]|$)/i
+			);
+			if (thoughtMatch && thoughtMatch[1]) {
+				await saveMessage(sessionId, "assistant", thoughtMatch[1].trim(), "thought");
+			}
+
 			const actionMatch = currentTurnOutput.match(/\[ACTION\]:?\s*(.*)/i);
 			if (actionMatch && actionMatch[1]) {
 				const actionCommand = actionMatch[1].trim();
 				const result = await executor.executeCommand(actionCommand);
-				await saveMessage(sessionId, "user", actionCommand, "command");
+				await saveMessage(sessionId, "assistant", actionCommand, "command");
 				await saveMessage(sessionId, "assistant", result, "result");
 
 				currentPrompt += `${currentTurnOutput}\n[OBSERVATION]: ${result}\n[THOUGHT]`;

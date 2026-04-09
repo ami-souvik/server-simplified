@@ -159,7 +159,7 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ sessionId }) => {
 								) : (
 									<div
 										className={cn(
-											"px-3 py-1.5 text-sm md:text-[15px] leading-relaxed",
+											"px-3 py-1.5 text-sm md:text-[15px] leading-relaxed whitespace-pre-line",
 											m.role === "user"
 												? "bg-zinc-100 text-zinc-900 font-medium rounded-lg"
 												: "text-zinc-100 font-serif"

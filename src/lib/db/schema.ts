@@ -13,6 +13,6 @@ export const messages = sqliteTable("messages", {
 		.references(() => sessions.id, { onDelete: "cascade" }),
 	role: text("role", { enum: ["user", "assistant", "system"] }).notNull(),
 	content: text("content").notNull(),
-	type: text("type", { enum: ["text", "command", "result"] }).default("text"),
+	type: text("type", { enum: ["text", "command", "result", "thought"] }).default("text"),
 	createdAt: integer("created_at", { mode: "timestamp" }).notNull(),
 });
