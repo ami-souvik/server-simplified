@@ -1,11 +1,11 @@
 services:
-  ami-ssh:
+  shmart:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: ami-ssh
+    container_name: shmart
     ports:
-      - "${PORT}:${PORT}"
+      - "${PORT:-2861}:${PORT:-2861}"
     env_file:
       - .env.local
     environment:
@@ -18,4 +18,4 @@ services:
 
 networks:
   default:
-    name: ami-ssh-network
+    name: shmart-network

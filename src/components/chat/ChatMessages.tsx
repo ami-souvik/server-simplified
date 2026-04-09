@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { Send, Loader2, User, Terminal, Cpu } from "lucide-react";
+import { v4 as uuidv4 } from "uuid";
 import { cn } from "@/lib/utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import TerminalOutput from "./TerminalOutput";
@@ -63,7 +64,7 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ sessionId }) => {
 
 		// 1. Optimistically add user message
 		const userMsg: Message = {
-			id: crypto.randomUUID(),
+			id: uuidv4(),
 			role: "user",
 			content: text,
 			type: "text",
@@ -93,7 +94,7 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ sessionId }) => {
 			// 3. Since the backend handles saving to DB, we can just refresh our list
 			// or add the final message manually for instant feedback.
 			const assistantMsg: Message = {
-				id: crypto.randomUUID(),
+				id: uuidv4(),
 				role: "assistant",
 				content: replyText,
 				type: "text",

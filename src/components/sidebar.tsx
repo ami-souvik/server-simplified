@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { v4 as uuidv4 } from "uuid";
 import {
 	Plus,
 	Search,
@@ -68,7 +69,7 @@ export const Sidebar = () => {
 	}, [currentSessionId, refreshKey]);
 
 	const handleNewChat = () => {
-		const newId = crypto.randomUUID();
+		const newId = uuidv4();
 		router.push(`/${newId}`);
 		setMenuOpenId(null);
 		if (isMobile) setSidebarOpen(false); // Close on mobile after selection
