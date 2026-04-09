@@ -9,7 +9,8 @@
 		"lint": "eslint .",
 		"lint:fix": "eslint . --fix",
 		"format": "prettier --write .",
-		"typecheck": "tsc --noEmit"
+		"typecheck": "tsc --noEmit",
+		"db:push": "drizzle-kit push"
 	},
 	"dependencies": {
 		"@ai-sdk/openai": "^3.0.51",
