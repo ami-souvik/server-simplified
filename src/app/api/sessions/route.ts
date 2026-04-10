@@ -1,21 +1,6 @@
 import { NextResponse } from "next/server";
 import { getSessions, createSession } from "@/lib/db/actions";
-import { runMigrations } from "@/lib/db/migrate";
-
-let migrationPromise: Promise<void> | null = null;
-
-async function ensureMigration() {
-	if (
-		!migrationPromise &&
-		process.env.NODE_ENV === "production" &&
-		!process.env.SKIP_DB_MIGRATE
-	) {
-		migrationPromise = runMigrations();
-	}
-	if (migrationPromise) {
-		await migrationPromise;
-	}
-}
+import { ensureMigration } from "@/lib/db/migrate";
 
 export async function GET() {
 	try {

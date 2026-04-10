@@ -1,24 +1,13 @@
 import { saveMessage } from "@/lib/db/actions";
 import { logDebug, logSystem } from "@/lib/debug-logger";
 import { getExecutor } from "@/lib/executor-factory";
-import { runMigrations } from "@/lib/db/migrate";
+import { ensureMigration } from "@/lib/db/migrate";
 import SYSTEM_PROMPT from "@/lib/system-prompt";
-
-let migrationPromise: Promise<void> | null = null;
 
 export async function POST(req: Request) {
 	try {
 		// Ensure migrations have run before handling any requests
-		if (
-			!migrationPromise &&
-			process.env.NODE_ENV === "production" &&
-			!process.env.SKIP_DB_MIGRATE
-		) {
-			migrationPromise = runMigrations();
-		}
-		if (migrationPromise) {
-			await migrationPromise;
-		}
+		await ensureMigration();
 
 		const { messages, id: sessionId, assistEnabled } = await req.json();
 
