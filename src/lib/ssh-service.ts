@@ -143,7 +143,7 @@ export class SSHService implements Executor {
 	): Promise<string> {
 		// Escape double quotes in the prompt
 		const escapedPrompt = prompt.replace(/"/g, '\\"');
-		const command = `ollama run ${model} "${escapedPrompt}"`;
+		const command = `ollama run --temperature ${process.env.OLLAMA_MODEL_TEMP || "0.7"} ${model} "${escapedPrompt}"`;
 		return this.executeCommand(command);
 	}
 }
