@@ -75,7 +75,7 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ sessionId }) => {
 		setIsLoading(true);
 
 		try {
-			// 2. Custom fetch call (not using useChat)
+			// 2. Custom fetch call with streaming support
 			const response = await fetch("/api/chat", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
@@ -88,23 +88,47 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ sessionId }) => {
 
 			if (!response.ok) throw new Error("Failed to get response");
 
-			// The backend now returns raw text
-			const replyText = await response.text();
+			// 3. Setup stream reader
+			const reader = response.body?.getReader();
+			const decoder = new TextEncoder();
+			const textDecoder = new TextDecoder();
 
-			// 3. Since the backend handles saving to DB, we can just refresh our list
-			// or add the final message manually for instant feedback.
+			if (!reader) throw new Error("No reader available");
+
+			// Add a placeholder assistant message for streaming
+			const assistantMsgId = uuidv4();
 			const assistantMsg: Message = {
-				id: uuidv4(),
+				id: assistantMsgId,
 				role: "assistant",
-				content: replyText,
+				content: "",
 				type: "text",
 				createdAt: new Date().toISOString(),
 			};
+			setMessages((prev) => [...prev, assistantMsg]);
 
-			// Refresh fully from DB to get actual IDs and tool results
+			let accumulatedContent = "";
+
+			while (true) {
+				const { done, value } = await reader.read();
+				if (done) break;
+
+				const chunk = textDecoder.decode(value, { stream: true });
+				accumulatedContent += chunk;
+
+				// Update the placeholder message with accumulated content
+				setMessages((prev) =>
+					prev.map((msg) =>
+						msg.id === assistantMsgId ? { ...msg, content: accumulatedContent } : msg
+					)
+				);
+			}
+
+			// 4. Once streaming is finished, refresh fully from DB to get actual formatted messages
 			const finalRes = await fetch(`/api/messages?sessionId=${sessionId}`);
 			const finalData = await finalRes.json();
-			setMessages(finalData);
+			if (Array.isArray(finalData)) {
+				setMessages(finalData);
+			}
 
 			triggerRefresh();
 		} catch (error) {
